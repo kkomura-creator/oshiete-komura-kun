@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教えて小村君（商圏情報）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+/* ============================================================
+   PG DARK PREMIUM — ネイビー × ティール × オレンジ
+   Pure Growth ブランドカラー準拠
+============================================================ */
+:root {
+  /* Dark Base */
+  --bg:         #07101C;
+  --surface:    #0C1A2E;
+  --card:       #101E38;
+  --card2:      #152644;
+  --border:     rgba(0,196,220,0.12);
+  --border-mid: rgba(0,196,220,0.24);
+
+  /* PG Teal (メインブランドカラー) */
+  --teal:       #00C4DC;
+  --teal-bright:#22D8EE;
+  --teal-dim:   #006678;
+  --teal-glow:  rgba(0,196,220,0.10);
+  --teal-glow2: rgba(0,196,220,0.05);
+
+  /* PG Orange (CTAカラー) */
+  --orange:     #F07030;
+  --orange-bright:#FF8844;
+  --orange-bg:  rgba(240,112,48,0.10);
+
+  /* PG Navy (見出し・ロゴカラー) */
+  --navy:       #1B3A6B;
+  --navy-mid:   #243F6E;
+
+  /* Gold (スコア・KPI強調) */
+  --gold:       #C9A84C;
+  --gold-light: #E8C97A;
+  --gold-dim:   rgba(201,168,76,0.15);
+  --gold-text:  #D4A94E;
+
+  /* Text */
+  --text:       #C8E0EE;
+  --text-mid:   #5E90B0;
+  --text-dim:   #2A4860;
+
+  /* Status */
+  --red:        #F05050;
+  --red-bg:     rgba(240,80,80,0.10);
+  --green:      #28C878;
+  --green-bg:   rgba(40,200,120,0.10);
+  --blue:       #4A9EE0;
+  --blue-bg:    rgba(74,158,224,0.10);
+
+  /* Shadow & Glow */
+  --shadow:     0 2px 20px rgba(0,0,0,0.50);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,0.65);
+  --teal-glow-shadow: 0 0 28px rgba(0,196,220,0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: linear-gradient(135deg, #040C18 0%, #091626 60%, #0C1E34 100%);
+  border-bottom: 1px solid var(--border-mid);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.7);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 11px 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.logo-icon {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, #0E2A50, #1B4A82);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--teal-glow-shadow);
+}
+.logo-text h1 {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  color: var(--text);
+}
+.logo-text p {
+  font-size: 9px;
+  color: var(--teal);
+  letter-spacing: 2.5px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+.area-selector {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: rgba(0,196,220,0.05);
+  border-radius: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  transition: border-color 0.2s;
+}
+.area-selector:hover { border-color: var(--border-mid); }
+.area-selector label {
+  font-size: 10px;
+  color: var(--text-mid);
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+  font-family: 'DM Mono', monospace;
+}
+.area-selector select {
+  background: transparent;
+  border: none;
+  color: var(--teal-bright);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Noto Sans JP', sans-serif;
+  cursor: pointer;
+  outline: none;
+}
+.area-selector select option { color: #333; background: white; }
+.header-badge {
+  margin-left: auto;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.28);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: var(--gold-light);
+  font-family: 'DM Mono', monospace;
+  white-space: nowrap;
+}
+
+/* ===== NAV ===== */
+.nav {
+  background: #080F1C;
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  padding: 0 24px;
+  overflow-x: auto;
+}
+.nav-btn {
+  color: var(--text-mid);
+  padding: 11px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  background: none;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: 'Noto Sans JP', sans-serif;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.2px;
+}
+.nav-btn:hover { color: var(--text); background: var(--teal-glow2); }
+.nav-btn.active {
+  color: var(--teal-bright);
+  border-bottom-color: var(--orange);
+  font-weight: 700;
+  background: var(--teal-glow2);
+}
+
+/* ===== CONTENT ===== */
+.content { max-width: 1400px; margin: 0 auto; padding: 24px; }
+.section { display: none; }
+.section.active { display: block; }
+
+/* ===== CARDS ===== */
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: border-color 0.25s;
+}
+.card:hover { border-color: var(--border-mid); }
+.card-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-mid);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+}
+.card-title::before {
+  content: '';
+  display: inline-block;
+  width: 3px; height: 13px;
+  background: linear-gradient(180deg, var(--teal-bright), var(--teal-dim));
+  border-radius: 2px;
+}
+
+/* ===== KPI CARDS ===== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.kpi-card {
+  background: linear-gradient(145deg, var(--card), var(--card2));
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s;
+}
+.kpi-card:hover { border-color: var(--border-mid); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent, var(--teal)), transparent);
+}
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  top: -40px; right: -20px;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-glow, rgba(0,196,220,0.08)), transparent 70%);
+  pointer-events: none;
+}
+.kpi-card .kpi-icon { font-size: 20px; margin-bottom: 10px; display: block; opacity: 0.85; }
+.kpi-card .kpi-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+}
+.kpi-card .kpi-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+  margin: 6px 0 2px;
+}
+.kpi-card .kpi-unit { font-size: 13px; font-weight: 400; color: var(--text-mid); }
+.kpi-card .kpi-trend {
+  font-size: 11px;
+  display: flex; align-items: center; gap: 4px;
+  margin-top: 4px;
+  font-family: 'DM Mono', monospace;
+}
+.trend-up { color: var(--green); }
+.trend-down { color: var(--red); }
+.trend-flat { color: var(--text-dim); }
+
+/* ===== CHART GRIDS ===== */
+.chart-grid-2   { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.chart-grid-3   { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.chart-grid-1-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
+.chart-grid-2-1 { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-bottom: 16px; }
+.chart-wrap    { position: relative; height: 240px; }
+.chart-wrap-sm { position: relative; height: 180px; }
+.chart-wrap-lg { position: relative; height: 300px; }
+
+/* ===== SECTION HEADER ===== */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.section-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.3px;
+}
+.section-desc { font-size: 11px; color: var(--text-mid); margin-top: 3px; letter-spacing: 0.3px; }
+
+/* ===== TABLES ===== */
+.data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.data-table th {
+  background: rgba(0,196,220,0.07);
+  color: var(--teal);
+  font-weight: 700;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--border-mid);
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+}
+.data-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
+.data-table tr:hover td { background: var(--teal-glow2); }
+.rank-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 50%;
+  font-size: 11px; font-weight: 700;
+  background: var(--card2); color: var(--text-mid);
+  border: 1px solid var(--border);
+  font-family: 'DM Mono', monospace;
+}
+.rank-1 { background: var(--gold-dim); color: var(--gold-light); border-color: rgba(201,168,76,0.35); }
+.rank-2 { background: rgba(160,160,180,0.12); color: #99A8C0; border-color: rgba(160,160,200,0.2); }
+.rank-3 { background: rgba(180,100,50,0.12); color: #C07840; border-color: rgba(180,100,50,0.25); }
+
+/* ===== BARS ===== */
+.bar-cell { display: flex; align-items: center; gap: 8px; }
+.bar-bg { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--teal); border-radius: 3px; transition: width 0.7s cubic-bezier(.4,0,.2,1); }
+.bar-fill.strong { background: linear-gradient(90deg, var(--teal-dim), var(--teal-bright)); }
+.bar-fill.mid { background: var(--orange); }
+.bar-fill.low { background: var(--text-dim); }
+
+/* ===== TAGS ===== */
+.tag {
+  display: inline-block; padding: 2px 9px; border-radius: 4px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+  font-family: 'DM Mono', monospace;
+}
+.tag-green  { background: var(--green-bg);  color: var(--green);  border: 1px solid rgba(40,200,120,0.22); }
+.tag-red    { background: var(--red-bg);    color: var(--red);    border: 1px solid rgba(240,80,80,0.22); }
+.tag-orange { background: var(--orange-bg); color: var(--orange); border: 1px solid rgba(240,112,48,0.22); }
+.tag-blue   { background: var(--blue-bg);   color: var(--blue);   border: 1px solid rgba(74,158,224,0.22); }
+.tag-teal   { background: var(--teal-glow); color: var(--teal-bright); border: 1px solid var(--border); }
+.tag-gray   { background: rgba(255,255,255,0.04); color: var(--text-mid); border: 1px solid var(--border); }
+
+/* ===== SCORE CARDS ===== */
+.score-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.score-item {
+  background: linear-gradient(145deg, var(--card), var(--card2));
+  border-radius: 10px; padding: 16px;
+  border: 1px solid var(--border); text-align: center; position: relative; overflow: hidden;
+}
+.score-item::before {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+}
+.score-item .score-num {
+  font-size: 34px; font-weight: 800;
+  color: var(--gold-light);
+  font-family: 'DM Mono', monospace; line-height: 1;
+}
+.score-item .score-max { font-size: 13px; color: var(--text-dim); font-family: 'DM Mono', monospace; }
+.score-item .score-label { font-size: 11px; color: var(--text-mid); margin-top: 6px; font-weight: 600; }
+
+/* ===== MAP ===== */
+.map-container {
+  background: linear-gradient(135deg, #06101C 0%, #0A1828 50%, #081422 100%);
+  border-radius: 12px; height: 420px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 1px solid var(--border); position: relative; overflow: hidden;
+}
+.map-container::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0,196,220,0.04) 39px, rgba(0,196,220,0.04) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0,196,220,0.04) 39px, rgba(0,196,220,0.04) 40px);
+}
+.map-overlay {
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(7,16,28,0.92); backdrop-filter: blur(8px);
+  border-radius: 10px; padding: 14px;
+  box-shadow: var(--shadow); width: 210px;
+  border: 1px solid var(--border-mid);
+}
+.map-overlay h4 { font-size: 11px; font-weight: 700; color: var(--teal); margin-bottom: 10px; letter-spacing: 0.5px; font-family: 'DM Mono', monospace; text-transform: uppercase; }
+.map-overlay p { font-size: 11px; color: var(--text-mid); margin-bottom: 5px; }
+
+/* ===== ALERTS ===== */
+.alert {
+  border-radius: 8px; padding: 11px 14px; font-size: 12px;
+  display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px;
+}
+.alert-green  { background: var(--green-bg);  border-left: 3px solid var(--green);  color: var(--text); }
+.alert-orange { background: var(--orange-bg); border-left: 3px solid var(--orange); color: var(--text); }
+.alert-red    { background: var(--red-bg);    border-left: 3px solid var(--red);    color: var(--text); }
+.alert-blue   { background: var(--blue-bg);   border-left: 3px solid var(--blue);   color: var(--text); }
+.alert-teal   { background: var(--teal-glow); border-left: 3px solid var(--teal);   color: var(--text); }
+
+/* ===== REPORT ===== */
+.report-card { background: var(--card); border: 1px solid var(--border-mid); border-radius: 14px; overflow: hidden; }
+.report-header {
+  background: linear-gradient(135deg, #040C18 0%, #091824 60%, #0E2030 100%);
+  border-bottom: 1px solid var(--border-mid);
+  color: var(--text); padding: 24px 28px; position: relative; overflow: hidden;
+}
+.report-header::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+}
+.report-body { padding: 24px 28px; background: var(--card); }
+.report-section { margin-bottom: 22px; }
+.report-section h3 {
+  font-size: 11px; font-weight: 700; color: var(--teal);
+  border-bottom: 1px solid var(--border); padding-bottom: 7px; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+  letter-spacing: 1px; font-family: 'DM Mono', monospace; text-transform: uppercase;
+}
+.report-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px; }
+.report-item { font-size: 12px; }
+.report-item .lbl { color: var(--text-dim); }
+.report-item .val { font-weight: 600; color: var(--text); }
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 18px; border-radius: 8px; font-size: 12px; font-weight: 700;
+  cursor: pointer; border: none; font-family: 'Noto Sans JP', sans-serif; transition: all 0.2s;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #D05A20, var(--orange));
+  color: white; box-shadow: 0 4px 16px rgba(240,112,48,0.30);
+}
+.btn-primary:hover { background: linear-gradient(135deg, var(--orange), var(--orange-bright)); box-shadow: 0 4px 22px rgba(240,112,48,0.45); }
+.btn-outline {
+  background: transparent; color: var(--teal);
+  border: 1px solid var(--border-mid);
+}
+.btn-outline:hover { background: var(--teal-glow); border-color: var(--teal); }
+.btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ===== PROGRESS BARS ===== */
+.prog-list { display: flex; flex-direction: column; gap: 12px; }
+.prog-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
+.prog-header span:first-child { font-weight: 600; color: var(--text); }
+.prog-header span:last-child { color: var(--text-mid); font-family: 'DM Mono', monospace; font-size: 11px; }
+.prog-bar { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); }
+
+/* ===== INSIGHT BOX ===== */
+.insight-box {
+  background: linear-gradient(135deg, rgba(0,196,220,0.06), rgba(0,196,220,0.02));
+  border: 1px solid var(--border-mid); border-radius: 12px;
+  padding: 18px; margin-bottom: 20px; position: relative; overflow: hidden;
+}
+.insight-box::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+}
+.insight-box h4 {
+  font-size: 11px; font-weight: 700; color: var(--gold-text);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+  letter-spacing: 1px; font-family: 'DM Mono', monospace; text-transform: uppercase;
+}
+.insight-list { list-style: none; }
+.insight-list li {
+  font-size: 12px; color: var(--text);
+  padding: 5px 0 5px 18px; position: relative;
+  border-bottom: 1px solid rgba(0,196,220,0.06); line-height: 1.6;
+}
+.insight-list li:last-child { border-bottom: none; }
+.insight-list li::before {
+  content: '▶'; position: absolute; left: 0;
+  color: var(--teal); font-size: 8px; top: 8px;
+}
+
+/* ===== RANK TREND BADGE ===== */
+.rank-change {
+  display: inline-flex; align-items: center; gap: 2px;
+  font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700;
+}
+.rank-up   { color: var(--green); }
+.rank-down { color: var(--red); }
+.rank-same { color: var(--text-dim); }
+
+/* ===== RANK TREND SPARKLINE ===== */
+.trend-spark {
+  display: flex; align-items: flex-end; gap: 3px; height: 24px;
+}
+.spark-bar {
+  width: 8px; border-radius: 2px 2px 0 0;
+  background: var(--teal-dim); transition: background 0.2s;
+}
+.spark-bar.latest { background: var(--teal); }
+
+/* ===== DATA SRC ===== */
+.data-src {
+  font-size: 9px; color: var(--teal);
+  background: var(--teal-glow); border: 1px solid var(--border);
+  border-radius: 4px; padding: 3px 9px; display: inline-block;
+  font-family: 'DM Mono', monospace; letter-spacing: 0.5px; text-transform: uppercase;
+}
+
+/* ===== UTIL ===== */
+.mb16 { margin-bottom: 16px; }
+.mb24 { margin-bottom: 24px; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .chart-grid-2, .chart-grid-3, .chart-grid-1-2, .chart-grid-2-1 { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .score-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-icon">🏠</div>
+      <div class="logo-text">
+        <h1>教えて小村君</h1>
+        <p>商圏情報 Analytics</p>
+      </div>
+    </div>
+    <div class="header-controls">
+      <div class="area-selector">
+        <label>都道府県</label>
+        <select id="prefSelect" onchange="updateArea()">
+          <option value="熊本県">熊本県</option>
+          <option value="福岡県">福岡県</option>
+          <option value="佐賀県">佐賀県</option>
+          <option value="長崎県">長崎県</option>
+          <option value="大分県">大分県</option>
+          <option value="宮崎県">宮崎県</option>
+          <option value="鹿児島県">鹿児島県</option>
+        </select>
+      </div>
+      <div class="area-selector">
+        <label>市区町村</label>
+        <select id="citySelect" onchange="updateArea()">
+          <option value="熊本市">熊本市</option>
+          <option value="菊陽町">菊陽町</option>
+          <option value="合志市">合志市</option>
+          <option value="大津町">大津町</option>
+          <option value="益城町">益城町</option>
+          <option value="宇土市">宇土市</option>
+        </select>
+      </div>
+      <div class="area-selector">
+        <label>商圏半径</label>
+        <select id="radiusSelect">
+          <option value="5km">5km圏</option>
+          <option value="10km" selected>10km圏</option>
+          <option value="15km">15km圏</option>
+          <option value="20km">20km圏</option>
+          <option value="車30分">車30分圏</option>
+        </select>
+      </div>
+    </div>
+    <div class="header-badge">📅 2026年4月 更新</div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showSection('dashboard',this)">📊 ダッシュボード</button>
+    <button class="nav-btn" onclick="showSection('population',this)">👥 人口・世帯</button>
+    <button class="nav-btn" onclick="showSection('housing',this)">🏗️ 住宅市場</button>
+    <button class="nav-btn" onclick="showSection('competition',this)">🏆 競合シェア（JSK）</button>
+    <button class="nav-btn" onclick="showSection('map',this)">🗺️ 商圏マップ</button>
+    <button class="nav-btn" onclick="showSection('strategy',this)">📍 出店戦略</button>
+    <button class="nav-btn" onclick="showSection('report',this)">📄 商談レポート</button>
+  </div>
+</nav>
+
+<main class="content">
+
+<!-- ==================== DASHBOARD ==================== -->
+<section id="dashboard" class="section active">
+  <div class="section-header">
+    <div>
+      <div class="section-title">📊 <span id="areaTitle">熊本市</span> 商圏ダッシュボード</div>
+      <div class="section-desc">主要KPI・商圏スコア・AIインサイト</div>
+    </div>
+    <span class="data-src">JSK・国土交通省・総務省統計</span>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card" style="--accent:var(--teal)">
+      <span class="kpi-icon">👥</span>
+      <div class="kpi-label">商圏内人口</div>
+      <div class="kpi-value">74.2<span class="kpi-unit">万人</span></div>
+      <div class="kpi-trend trend-down">▼ 0.8% 前年比</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--orange); --accent-glow:rgba(240,112,48,0.08)">
+      <span class="kpi-icon">🏠</span>
+      <div class="kpi-label">注文住宅 着工棟数</div>
+      <div class="kpi-value">1,842<span class="kpi-unit">棟/年</span></div>
+      <div class="kpi-trend trend-down">▼ 3.2% 前年比</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--red); --accent-glow:rgba(240,80,80,0.08)">
+      <span class="kpi-icon">📈</span>
+      <div class="kpi-label">トップシェア（一条）</div>
+      <div class="kpi-value">18.4<span class="kpi-unit">%</span></div>
+      <div class="kpi-trend trend-down">▲ +2.1pt 前年比</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--gold); --accent-glow:rgba(201,168,76,0.08)">
+      <span class="kpi-icon">🎯</span>
+      <div class="kpi-label">商圏スコア</div>
+      <div class="kpi-value">78<span class="kpi-unit">/100</span></div>
+      <div class="kpi-trend trend-up">▲ 中〜高ポテンシャル</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--blue); --accent-glow:rgba(74,158,224,0.08)">
+      <span class="kpi-icon">💰</span>
+      <div class="kpi-label">平均世帯年収</div>
+      <div class="kpi-value">468<span class="kpi-unit">万円</span></div>
+      <div class="kpi-trend trend-up">▲ 1.2% 前年比</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--teal)">
+      <span class="kpi-icon">🏡</span>
+      <div class="kpi-label">持家率</div>
+      <div class="kpi-value">62.3<span class="kpi-unit">%</span></div>
+      <div class="kpi-trend trend-flat">→ 全国平均 +1.1pt</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--green); --accent-glow:rgba(40,200,120,0.08)">
+      <span class="kpi-icon">🌱</span>
+      <div class="kpi-label">30〜44歳 子育て世帯</div>
+      <div class="kpi-value">8.6<span class="kpi-unit">万世帯</span></div>
+      <div class="kpi-trend trend-up">▲ 2.1%（転入増）</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--orange); --accent-glow:rgba(240,112,48,0.08)">
+      <span class="kpi-icon">🏭</span>
+      <div class="kpi-label">競合ビルダー数</div>
+      <div class="kpi-value">24<span class="kpi-unit">社</span></div>
+      <div class="kpi-trend trend-down">▼ 前年比 −2社</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <h4>💡 AI 商圏インサイト</h4>
+    <ul class="insight-list">
+      <li>菊陽町・合志市方面への人口流入が継続。注文住宅一次取得層（30代）の増加エリアとして最優先候補</li>
+      <li>一条工務店が前年比+12%で独走。価格帯3,200〜3,800万円帯での競合対策が急務</li>
+      <li>着工全体は3.2%減も Z世代（28〜33歳）の新築検討率は増。WEB集客強化が最短ROI</li>
+      <li>上位3社でシェア40.7%の寡占化進行。2番手以下との差別化ポジション確立がカギ</li>
+    </ul>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="card">
+      <div class="card-title">注文住宅 着工棟数推移（商圏内）</div>
+      <div class="chart-wrap"><canvas id="chartDashHousing"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">上位5社 シェア（2025年）</div>
+      <div class="chart-wrap"><canvas id="chartDashShare"></canvas></div>
+    </div>
+  </div>
+  <div class="chart-grid-3">
+    <div class="card">
+      <div class="card-title">人口増減（直近5年）</div>
+      <div class="chart-wrap-sm"><canvas id="chartDashPop"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">年齢別人口構成</div>
+      <div class="chart-wrap-sm"><canvas id="chartDashAge"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">住宅タイプ別 着工比率</div>
+      <div class="chart-wrap-sm"><canvas id="chartDashType"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== POPULATION ==================== -->
+<section id="population" class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title">👥 人口・世帯分析</div>
+      <div class="section-desc">人口増減推移・年齢構成・世帯数・転入出動向</div>
+    </div>
+    <span class="data-src">総務省統計局・国勢調査</span>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card" style="--accent:var(--teal)"><span class="kpi-icon">👥</span><div class="kpi-label">総人口</div><div class="kpi-value">74.2<span class="kpi-unit">万人</span></div><div class="kpi-trend trend-down">▼ 5,900人 前年比</div></div>
+    <div class="kpi-card" style="--accent:var(--orange); --accent-glow:rgba(240,112,48,0.08)"><span class="kpi-icon">🏘️</span><div class="kpi-label">総世帯数</div><div class="kpi-value">31.4<span class="kpi-unit">万世帯</span></div><div class="kpi-trend trend-up">▲ 800世帯 前年比</div></div>
+    <div class="kpi-card" style="--accent:var(--red); --accent-glow:rgba(240,80,80,0.08)"><span class="kpi-icon">👶</span><div class="kpi-label">0〜14歳（年少）</div><div class="kpi-value">11.2<span class="kpi-unit">%</span></div><div class="kpi-trend trend-down">▼ 全国平均 11.8%</div></div>
+    <div class="kpi-card" style="--accent:var(--gold); --accent-glow:rgba(201,168,76,0.08)"><span class="kpi-icon">💼</span><div class="kpi-label">30〜49歳（コア購買層）</div><div class="kpi-value">24.8<span class="kpi-unit">%</span></div><div class="kpi-trend trend-up">▲ +0.4pt 前年比</div></div>
+  </div>
+  <div class="chart-grid-2">
+    <div class="card"><div class="card-title">人口増減推移（2015〜2025年）</div><div class="chart-wrap-lg"><canvas id="chartPopTrend"></canvas></div></div>
+    <div class="card"><div class="card-title">5歳刻み年齢別人口構成（2025年）</div><div class="chart-wrap-lg"><canvas id="chartPopAge"></canvas></div></div>
+  </div>
+  <div class="chart-grid-2">
+    <div class="card"><div class="card-title">世帯数推移・1世帯平均人員</div><div class="chart-wrap"><canvas id="chartHousehold"></canvas></div></div>
+    <div class="card"><div class="card-title">転入超過数（市区町村別）</div><div class="chart-wrap"><canvas id="chartMigration"></canvas></div></div>
+  </div>
+  <div class="chart-grid-1-2">
+    <div class="card"><div class="card-title">将来人口予測（2030〜2040年）</div><div class="chart-wrap"><canvas id="chartPopFuture"></canvas></div></div>
+    <div class="card">
+      <div class="card-title">注目エリア 人口動態</div>
+      <div style="margin-top:4px">
+        <div class="alert alert-teal">🌱 <div><strong>菊陽町</strong> 転入超過+1,420人/年。半導体企業集積で30代流入継続中</div></div>
+        <div class="alert alert-teal">🌱 <div><strong>合志市</strong> 年少人口比率14.2%（県内最高）。新築ニーズ最大エリア</div></div>
+        <div class="alert alert-orange">⚠️ <div><strong>熊本市中心部</strong> 65歳以上比率28%超。建て替え・リフォーム需要にシフト</div></div>
+        <div class="alert alert-blue">ℹ️ <div><strong>大津町</strong> 工場増設による社員寮・分譲需要増加。2027年まで継続見込</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HOUSING ==================== -->
+<section id="housing" class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🏗️ 住宅市場データ</div>
+      <div class="section-desc">着工棟数推移・注文住宅シェア・地価・建て替え需要</div>
+    </div>
+    <span class="data-src">国土交通省着工統計・固定資産税台帳</span>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card" style="--accent:var(--teal)"><span class="kpi-icon">🔨</span><div class="kpi-label">着工棟数（全用途）</div><div class="kpi-value">4,218<span class="kpi-unit">棟/年</span></div><div class="kpi-trend trend-down">▼ 4.1%</div></div>
+    <div class="kpi-card" style="--accent:var(--orange); --accent-glow:rgba(240,112,48,0.08)"><span class="kpi-icon">🏡</span><div class="kpi-label">注文住宅着工棟数</div><div class="kpi-value">1,842<span class="kpi-unit">棟/年</span></div><div class="kpi-trend trend-down">▼ 3.2%</div></div>
+    <div class="kpi-card" style="--accent:var(--green); --accent-glow:rgba(40,200,120,0.08)"><span class="kpi-icon">📊</span><div class="kpi-label">注文住宅シェア</div><div class="kpi-value">43.7<span class="kpi-unit">%</span></div><div class="kpi-trend trend-up">▲ 0.8pt（全国41.2%）</div></div>
+    <div class="kpi-card" style="--accent:var(--gold); --accent-glow:rgba(201,168,76,0.08)"><span class="kpi-icon">🏚️</span><div class="kpi-label">建て替え推計（30年超）</div><div class="kpi-value">6.2<span class="kpi-unit">万棟</span></div><div class="kpi-trend trend-up">▲ 潜在需要大</div></div>
+  </div>
+  <div class="chart-grid-2">
+    <div class="card"><div class="card-title">着工棟数推移（用途別・月次）</div><div class="chart-wrap-lg"><canvas id="chartHousingMonthly"></canvas></div></div>
+    <div class="card"><div class="card-title">着工棟数推移（年次・5年比較）</div><div class="chart-wrap-lg"><canvas id="chartHousingYearly"></canvas></div></div>
+  </div>
+  <div class="chart-grid-2">
+    <div class="card"><div class="card-title">住宅タイプ別着工比率推移</div><div class="chart-wrap"><canvas id="chartHousingType"></canvas></div></div>
+    <div class="card"><div class="card-title">地価推移（市区町村別・住宅地）</div><div class="chart-wrap"><canvas id="chartLandPrice"></canvas></div></div>
+  </div>
+  <div class="chart-grid-2-1">
+    <div class="card"><div class="card-title">建て替え需要（築年数別戸数）</div><div class="chart-wrap"><canvas id="chartRebuild"></canvas></div></div>
+    <div class="card">
+      <div class="card-title">市場サマリー</div>
+      <div class="alert alert-teal">🏆 <div><strong>注文住宅シェア43.7%</strong> — 全国平均超。ビルダー商圏として優良水準</div></div>
+      <div class="alert alert-orange">⚠️ <div><strong>着工全体は減少傾向</strong> — 人口減・金利上昇の影響。菊陽・合志は逆行増</div></div>
+      <div class="alert alert-blue">ℹ️ <div><strong>建て替え需要6.2万棟</strong> — 1980〜90年代築の次の需要波が到来</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== COMPETITION ==================== -->
+<section id="competition" class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🏆 競合シェア分析（JSKデータ）</div>
+      <div class="section-desc">ビルダーランキング・市場シェア・3年推移・競合動向</div>
+    </div>
+    <span class="data-src">JSK競争力分析データ 2022-2025年版</span>
+  </div>
+
+  <div class="chart-grid-1-2 mb24">
+    <div class="card">
+      <div class="card-title">ビルダー別シェア（2025年）</div>
+      <div class="chart-wrap-lg"><canvas id="chartCompShare"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">シェア 前年比変動</div>
+      <div class="chart-wrap-lg"><canvas id="chartCompChange"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ランキング表 (3年推移付き) -->
+  <div class="card mb24">
+    <div class="card-title">ビルダーランキング — 熊本市商圏（2023→2024→2025年 推移）</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>2025<br>順位</th>
+          <th>ビルダー名</th>
+          <th>2023棟数</th>
+          <th>2024棟数</th>
+          <th>2025棟数</th>
+          <th>3年推移</th>
+          <th>2025シェア</th>
+          <th>前年比</th>
+          <th>順位変動</th>
+          <th>主力商品</th>
+          <th>価格帯</th>
+          <th>動向</th>
+        </tr>
+      </thead>
+      <tbody id="rankingTable"></tbody>
+    </table>
+  </div>
+
+  <!-- 3年ランキング比較チャート -->
+  <div class="chart-grid-2 mb24">
+    <div class="card">
+      <div class="card-title">着工棟数 3年推移（上位6社）</div>
+      <div class="chart-wrap-lg"><canvas id="chartCompTrend"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">順位変動ヒートマップ（3年間）</div>
+      <div id="rankHeatmap" style="padding:8px 0;"></div>
+    </div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="card">
+      <div class="card-title">シェア推移（2022〜2025年）</div>
+      <div class="chart-wrap-lg"><canvas id="chartCompShareTrend"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">競合ポジショニングマップ</div>
+      <div class="chart-wrap-lg"><canvas id="chartCompPosition"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MAP ==================== -->
+<section id="map" class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🗺️ 商圏マップ</div>
+      <div class="section-desc">商圏範囲・競合展開・人口密度・出店候補地</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-outline" onclick="alert('地図データ接続は本番版で実装')">🔄 最新データ取得</button>
+      <button class="btn btn-primary" onclick="alert('PDF出力機能は本番版で実装')">📥 マップ出力</button>
+    </div>
+  </div>
+  <div class="chart-grid-2-1">
+    <div class="map-container">
+      <div style="text-align:center; position:relative; z-index:1;">
+        <div style="font-size:64px; margin-bottom:16px;">🗺️</div>
+        <div style="font-size:18px; font-weight:700; color:var(--teal); margin-bottom:8px;">インタラクティブ商圏マップ</div>
+        <div style="font-size:12px; color:var(--text-mid); max-width:300px; line-height:1.8;">
+          本番版では Leaflet.js + 国土地理院タイルで<br>
+          商圏範囲・競合展示場・人口ヒートマップを表示
+        </div>
+      </div>
+      <div class="map-overlay">
+        <h4>📍 熊本市 10km圏</h4>
+        <p>✅ 商圏内人口：74.2万人</p>
+        <p>✅ 競合展示場：18箇所</p>
+        <p>✅ 商圏重複率：62%</p>
+        <p>⚠️ 分断ライン：益城IC周辺</p>
+        <p style="color:var(--teal);">★ 推奨出店地：菊陽北部</p>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div class="card">
+        <div class="card-title">商圏内スポット</div>
+        <div class="prog-list">
+          <div class="prog-item"><div class="prog-header"><span>競合展示場</span><span>18箇所</span></div><div class="prog-bar"><div class="prog-fill" style="width:72%; background:var(--red)"></div></div></div>
+          <div class="prog-item"><div class="prog-header"><span>大型商業施設</span><span>12箇所</span></div><div class="prog-bar"><div class="prog-fill" style="width:48%; background:var(--orange)"></div></div></div>
+          <div class="prog-item"><div class="prog-header"><span>住宅展示場</span><span>3箇所</span></div><div class="prog-bar"><div class="prog-fill" style="width:30%"></div></div></div>
+          <div class="prog-item"><div class="prog-header"><span>大型分譲地</span><span>8箇所</span></div><div class="prog-bar"><div class="prog-fill" style="width:64%; background:var(--blue)"></div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">商圏分断情報</div>
+        <div class="alert alert-orange">⚠️ <div><strong>益城IC〜空港道路沿</strong>：一条+積水が塀を形成する分断ライン</div></div>
+        <div class="alert alert-red">🚫 <div><strong>御船方面</strong>：競合密集。新規参入コスト高</div></div>
+        <div class="alert alert-teal">✅ <div><strong>菊陽北部〜大津</strong>：競合薄・人口流入中。最優先候補</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">出店候補スコア</div>
+        <div class="score-grid" style="grid-template-columns:1fr 1fr;">
+          <div class="score-item"><div class="score-num">92<span class="score-max">/100</span></div><div class="score-label">菊陽北部</div></div>
+          <div class="score-item"><div class="score-num">84<span class="score-max">/100</span></div><div class="score-label">合志インター</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== STRATEGY ==================== -->
+<section id="strategy" class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title">📍 出店戦略分析</div>
+      <div class="section-desc">商圏スコアリング・候補地評価・商圏分断情報</div>
+    </div>
+    <span class="data-src">独自スコアリングモデル v2.1</span>
+  </div>
+  <div class="chart-grid-2 mb24">
+    <div class="card"><div class="card-title">商圏総合スコア（レーダー）</div><div class="chart-wrap-lg"><canvas id="chartStrategyRadar"></canvas></div></div>
+    <div class="card"><div class="card-title">出店候補地 スコア比較</div><div class="chart-wrap-lg"><canvas id="chartStrategyCandidates"></canvas></div></div>
+  </div>
+  <div class="card mb24">
+    <div class="card-title">出店候補地 詳細評価表</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>候補地</th><th>人口ポテンシャル</th><th>競合密度</th><th>地価・取得難易度</th><th>交通アクセス</th><th>将来性</th><th>総合スコア</th><th>推奨度</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>菊陽北部</strong></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill strong" style="width:92%"></div></div><span>92</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:28%;background:var(--teal)"></div></div><span>低</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill mid" style="width:60%"></div></div><span>中</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill strong" style="width:88%"></div></div><span>88</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill strong" style="width:95%"></div></div><span>95</span></div></td>
+          <td><strong style="color:var(--teal-bright);font-size:16px;font-family:'DM Mono',monospace;">92</strong></td>
+          <td><span class="tag tag-teal">◎ 最優先</span></td>
+        </tr>
+        <tr>
+          <td><strong>合志インター周辺</strong></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill strong" style="width:84%"></div></div><span>84</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:40%;background:var(--teal)"></div></div><span>中低</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill strong" style="width:78%"></div></div><span>良</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill strong" style="width:82%"></div></div><span>82</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill strong" style="width:80%"></div></div><span>80</span></div></td>
+          <td><strong style="color:var(--teal);font-size:16px;font-family:'DM Mono',monospace;">84</strong></td>
+          <td><span class="tag tag-green">○ 優先</span></td>
+        </tr>
+        <tr>
+          <td><strong>大津IC南</strong></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:72%"></div></div><span>72</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:45%;background:var(--teal)"></div></div><span>中</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill strong" style="width:82%"></div></div><span>良</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:68%"></div></div><span>68</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:74%"></div></div><span>74</span></div></td>
+          <td><strong style="font-size:16px;font-family:'DM Mono',monospace;">74</strong></td>
+          <td><span class="tag tag-orange">△ 要検討</span></td>
+        </tr>
+        <tr>
+          <td><strong>益城中心部</strong></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:60%"></div></div><span>60</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill low" style="width:82%;background:var(--red)"></div></div><span>高</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill mid" style="width:50%"></div></div><span>中</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:64%"></div></div><span>64</span></div></td>
+          <td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:55%"></div></div><span>55</span></div></td>
+          <td><strong style="color:var(--red);font-size:16px;font-family:'DM Mono',monospace;">58</strong></td>
+          <td><span class="tag tag-red">✕ 非推奨</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="chart-grid-2">
+    <div class="card"><div class="card-title">エリア別 着工ポテンシャル</div><div class="chart-wrap"><canvas id="chartStrategyArea"></canvas></div></div>
+    <div class="card"><div class="card-title">時系列スコア変動</div><div class="chart-wrap"><canvas id="chartStrategyTime"></canvas></div></div>
+  </div>
+</section>
+
+<!-- ==================== REPORT ==================== -->
+<section id="report" class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title">📄 初回商談レポート</div>
+      <div class="section-desc">商圏理解サマリー・自動生成レポート</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="window.print()">🖨️ 印刷・PDF出力</button>
+      <button class="btn btn-outline" onclick="alert('Chatwork送信機能は本番版で実装')">💬 Chatworkで共有</button>
+    </div>
+  </div>
+  <div class="report-card">
+    <div class="report-header">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div>
+          <div style="font-size:10px; color:var(--teal); letter-spacing:2px; margin-bottom:8px; font-family:'DM Mono',monospace;">PURE GROWTH — 商圏情報レポート</div>
+          <h2 style="font-size:22px; font-weight:800; margin-bottom:6px; color:var(--text);">熊本市 商圏理解レポート</h2>
+          <div style="font-size:12px; color:var(--text-mid);">2026年4月22日現在 ／ 商圏半径10km ／ 作成：教えて小村君</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:36px; font-weight:800; color:var(--gold-light); font-family:'DM Mono',monospace; line-height:1;">78<span style="font-size:16px;">/100</span></div>
+          <div style="font-size:10px; color:var(--text-mid); margin-top:4px; letter-spacing:0.5px; font-family:'DM Mono',monospace;">商圏総合スコア</div>
+        </div>
+      </div>
+    </div>
+    <div class="report-body">
+      <div class="report-section">
+        <h3>📊 エリア基本データ</h3>
+        <div class="report-row">
+          <div class="report-item"><span class="lbl">商圏内人口：</span><span class="val">742,000人</span></div>
+          <div class="report-item"><span class="lbl">総世帯数：</span><span class="val">314,000世帯</span></div>
+          <div class="report-item"><span class="lbl">人口増減：</span><span class="val" style="color:var(--red)">▼ 0.8%（減少傾向）</span></div>
+          <div class="report-item"><span class="lbl">持家率：</span><span class="val">62.3%（全国+1.1pt）</span></div>
+          <div class="report-item"><span class="lbl">平均世帯年収：</span><span class="val">468万円</span></div>
+          <div class="report-item"><span class="lbl">30〜44歳世帯：</span><span class="val">86,000世帯</span></div>
+        </div>
+      </div>
+      <div class="report-section">
+        <h3>🏗️ 住宅市場</h3>
+        <div class="report-row">
+          <div class="report-item"><span class="lbl">年間着工（全用途）：</span><span class="val">4,218棟</span></div>
+          <div class="report-item"><span class="lbl">注文住宅着工：</span><span class="val">1,842棟</span></div>
+          <div class="report-item"><span class="lbl">注文住宅シェア：</span><span class="val" style="color:var(--teal)">43.7%（全国平均超）</span></div>
+          <div class="report-item"><span class="lbl">着工前年比：</span><span class="val" style="color:var(--red)">▼ 3.2%</span></div>
+          <div class="report-item"><span class="lbl">建て替え需要：</span><span class="val">約62,000棟（築30年超）</span></div>
+          <div class="report-item"><span class="lbl">注目エリア：</span><span class="val">菊陽町・合志市（増加中）</span></div>
+        </div>
+      </div>
+      <div class="report-section">
+        <h3>🏆 競合状況（JSK 2025年）</h3>
+        <div class="report-row">
+          <div class="report-item"><span class="lbl">競合ビルダー数：</span><span class="val">24社</span></div>
+          <div class="report-item"><span class="lbl">1位 一条工務店：</span><span class="val" style="color:var(--red)">339棟 18.4% ▲12%</span></div>
+          <div class="report-item"><span class="lbl">2位 桧家HD：</span><span class="val">218棟 11.8% ▲3%</span></div>
+          <div class="report-item"><span class="lbl">3位 積水ハウス：</span><span class="val">194棟 10.5% ▼3%</span></div>
+          <div class="report-item"><span class="lbl">上位3社集中度：</span><span class="val">40.7%（寡占化進行）</span></div>
+          <div class="report-item"><span class="lbl">市場構造：</span><span class="val">一条独走・中堅争い激化</span></div>
+        </div>
+      </div>
+      <div class="report-section">
+        <h3>📍 商圏分断・出店戦略</h3>
+        <div class="report-row">
+          <div class="report-item"><span class="lbl">商圏重複率：</span><span class="val">62%（競合と重複）</span></div>
+          <div class="report-item"><span class="lbl">最優先出店地：</span><span class="val" style="color:var(--teal)">菊陽北部（スコア92）</span></div>
+          <div class="report-item"><span class="lbl">分断ライン：</span><span class="val">益城IC〜空港道路周辺</span></div>
+          <div class="report-item"><span class="lbl">ホワイトスポット：</span><span class="val">菊陽北部・合志インター</span></div>
+        </div>
+      </div>
+      <div class="report-section">
+        <h3>💡 初回商談 提案ポイント</h3>
+        <ul class="insight-list">
+          <li>【市場機会】菊陽・合志エリアは転入超過継続中の成長エリア。競合空白地帯であり即時出店で先行優位</li>
+          <li>【競合対策】一条工務店が独走中だが「価格対比の仕様・自由度・アフター」差別化は有効。失注先データ分析と組み合わせ更に効果的</li>
+          <li>【建て替え需要】築30年超6.2万棟。LTV向上策として既存客OBリノベ営業を並走させるべき</li>
+          <li>【集客設計】30代転入世帯のWEB問合せ増加。SEO+Meta広告+LINE友達追加の3点セットが最短ROI</li>
+          <li>【数字の根拠】注文住宅1,842棟×平均3,200万円≒589億円市場。シェア5%=約100棟=約30億円の機会</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+// ===== NAV =====
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function updateArea() {
+  document.getElementById('areaTitle').textContent = document.getElementById('citySelect').value;
+}
+
+// ===== CHART DEFAULTS (PG dark theme) =====
+Chart.defaults.font.family = "'Noto Sans JP', sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#5E90B0';
+
+// PG Color Palette for charts
+const T  = '#00C4DC';  // teal
+const T2 = '#22D8EE';  // teal bright
+const T3 = '#005A6A';  // teal dim
+const O  = '#F07030';  // orange
+const O2 = '#FF9050';  // orange light
+const R  = '#F05050';  // red
+const G  = '#28C878';  // green
+const G2 = '#1A9A58';  // green dim
+const B  = '#4A9EE0';  // blue
+const Y  = '#C9A84C';  // gold
+const GR = 'rgba(255,255,255,0.15)'; // gray
+
+const GRID = 'rgba(0,196,220,0.08)';
+const GRID2= 'rgba(255,255,255,0.04)';
+
+function mkChart(id, type, labels, datasets, opts={}) {
+  const ctx = document.getElementById(id);
+  if (!ctx) return;
+  return new Chart(ctx, {
+    type,
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position:'bottom', labels:{ boxWidth:10, padding:10, font:{size:10}, color:'#5E90B0' } }
+      },
+      scales: type !== 'pie' && type !== 'doughnut' && type !== 'radar' ? {
+        x: { grid:{color:GRID}, ticks:{color:'#5E90B0'} },
+        y: { grid:{color:GRID}, ticks:{color:'#5E90B0'}, beginAtZero:true }
+      } : {},
+      ...opts
+    }
+  });
+}
+
+// ===== DASHBOARD =====
+mkChart('chartDashHousing','bar',
+  ['2020','2021','2022','2023','2024','2025'],
+  [
+    {label:'注文住宅', data:[2180,2120,2050,1980,1902,1842], backgroundColor:T, borderRadius:4},
+    {label:'分譲',     data:[680,710,695,660,640,612],       backgroundColor:O, borderRadius:4},
+    {label:'賃貸等',   data:[1890,1820,1770,1740,1710,1764], backgroundColor:T3, borderRadius:4}
+  ]
+);
+mkChart('chartDashShare','doughnut',
+  ['一条工務店','桧家HD','積水ハウス','大和ハウス','地元工務店A','その他'],
+  [{data:[18.4,11.8,10.5,7.2,6.8,45.3], backgroundColor:[R,O,B,Y,T,GR], borderWidth:2, borderColor:'#101E38'}]
+);
+mkChart('chartDashPop','line',
+  ['21','22','23','24','25'],
+  [{label:'人口（万人）', data:[75.8,75.4,75.1,74.6,74.2], borderColor:T, backgroundColor:'rgba(0,196,220,0.08)', fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:T}]
+);
+mkChart('chartDashAge','bar',
+  ['0-14','15-29','30-44','45-59','60-74','75+'],
+  [{label:'構成比(%)', data:[11.2,13.8,24.8,20.4,18.6,11.2], backgroundColor:[T3,T2,T,T2,O,R], borderRadius:4}]
+);
+mkChart('chartDashType','doughnut',
+  ['注文住宅','分譲住宅','賃貸住宅','その他'],
+  [{data:[43.7,14.5,40.2,1.6], backgroundColor:[T,O,T3,GR], borderWidth:2, borderColor:'#101E38'}]
+);
+
+// ===== POPULATION =====
+mkChart('chartPopTrend','bar',
+  ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'],
+  [
+    {label:'増減数（人）', type:'bar', data:[2100,1800,1200,800,-200,-800,-1200,-1800,-2400,-5200,-5900],
+      backgroundColor: ctx => ctx.raw >= 0 ? T : R, borderRadius:3},
+    {label:'総人口（万人）', type:'line', data:[73.8,74.1,74.3,74.4,74.3,75.1,75.8,75.4,75.1,74.6,74.2],
+      borderColor:B, yAxisID:'y2', tension:0.4, pointRadius:3, backgroundColor:'transparent', pointBackgroundColor:B}
+  ],
+  {scales:{x:{grid:{color:GRID},ticks:{color:'#5E90B0'}}, y:{grid:{color:GRID},ticks:{color:'#5E90B0'},title:{display:true,text:'増減数',color:'#5E90B0'}}, y2:{position:'right',grid:{display:false},ticks:{color:'#5E90B0'},title:{display:true,text:'総人口（万人）',color:'#5E90B0'}}}}
+);
+mkChart('chartPopAge','bar',
+  ['0-4','5-9','10-14','15-19','20-24','25-29','30-34','35-39','40-44','45-49','50-54','55-59','60-64','65-69','70-74','75+'],
+  [{label:'人口（千人）', data:[28,30,25,26,32,38,46,48,44,42,40,38,35,32,30,28],
+    backgroundColor: ctx => { const v=ctx.dataIndex; return v>=6&&v<=9?T:v>=10&&v<=13?T2:T3; }, borderRadius:2}]
+);
+mkChart('chartHousehold','line',
+  ['2015','2017','2019','2021','2023','2025'],
+  [
+    {label:'世帯数（万）', data:[28.2,29.0,29.8,30.4,31.0,31.4], borderColor:T, fill:false, tension:0.4, yAxisID:'y', pointBackgroundColor:T},
+    {label:'1世帯平均人員', data:[2.64,2.58,2.52,2.46,2.42,2.38], borderColor:O, fill:false, tension:0.4, yAxisID:'y2', pointBackgroundColor:O}
+  ],
+  {scales:{x:{grid:{color:GRID},ticks:{color:'#5E90B0'}}, y:{grid:{color:GRID},ticks:{color:'#5E90B0'},title:{display:true,text:'世帯数（万）',color:'#5E90B0'}}, y2:{position:'right',grid:{display:false},ticks:{color:'#5E90B0'},title:{display:true,text:'平均人員',color:'#5E90B0'}}}}
+);
+mkChart('chartMigration','bar',
+  ['菊陽町','合志市','大津町','宇城市','宇土市','玉名市','阿蘇市','天草市'],
+  [{label:'転入超過数（人/年）', data:[1420,980,640,120,-80,-240,-380,-520],
+    backgroundColor: ctx => ctx.raw >= 0 ? T : R, borderRadius:4}]
+);
+mkChart('chartPopFuture','line',
+  ['2025','2027','2030','2033','2035','2040'],
+  [
+    {label:'基本推計（万人）', data:[74.2,73.4,72.0,70.2,68.8,65.5], borderColor:T, backgroundColor:'rgba(0,196,220,0.06)', fill:true, tension:0.4, pointBackgroundColor:T},
+    {label:'移住促進シナリオ', data:[74.2,73.8,73.0,72.2,71.5,70.0], borderColor:B, borderDash:[5,5], tension:0.4, pointBackgroundColor:B}
+  ]
+);
+
+// ===== HOUSING =====
+mkChart('chartHousingMonthly','line',
+  ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+  [
+    {label:'注文住宅', data:[120,108,168,154,158,168,172,162,158,162,148,164], borderColor:T, fill:false, tension:0.4, pointBackgroundColor:T},
+    {label:'分譲',     data:[48,42,62,54,52,56,60,52,50,54,48,58],             borderColor:O, fill:false, tension:0.4, pointBackgroundColor:O},
+    {label:'賃貸',     data:[142,128,188,162,158,148,152,142,148,150,138,168], borderColor:T3, fill:false, tension:0.4}
+  ]
+);
+mkChart('chartHousingYearly','bar',
+  ['注文住宅','分譲','賃貸'],
+  [
+    {label:'2021', data:[2120,710,1820], backgroundColor:'rgba(0,196,220,0.20)', borderRadius:3},
+    {label:'2023', data:[1980,660,1740], backgroundColor:'rgba(0,196,220,0.45)', borderRadius:3},
+    {label:'2025', data:[1842,612,1764], backgroundColor:T, borderRadius:3}
+  ]
+);
+mkChart('chartHousingType','line',
+  ['2019','2020','2021','2022','2023','2024','2025'],
+  [
+    {label:'注文住宅率(%)', data:[41.2,41.8,42.4,42.8,43.1,43.4,43.7], borderColor:T, fill:false, tension:0.4, pointBackgroundColor:T},
+    {label:'分譲率(%)',     data:[15.8,15.2,14.8,14.6,14.4,14.5,14.5], borderColor:O, fill:false, tension:0.4, pointBackgroundColor:O},
+    {label:'賃貸率(%)',     data:[41.4,41.4,41.2,41.0,40.9,40.6,40.2], borderColor:T3, fill:false, tension:0.4}
+  ]
+);
+mkChart('chartLandPrice','line',
+  ['2020','2021','2022','2023','2024','2025'],
+  [
+    {label:'菊陽町（円/m²）', data:[42000,44500,49000,56000,62000,68000], borderColor:T, fill:false, tension:0.4, pointBackgroundColor:T},
+    {label:'合志市',           data:[38000,39500,42000,46000,50000,54000], borderColor:B, fill:false, tension:0.4, pointBackgroundColor:B},
+    {label:'熊本市平均',       data:[52000,53500,55000,57000,58000,59500], borderColor:O, fill:false, tension:0.4, pointBackgroundColor:O}
+  ]
+);
+mkChart('chartRebuild','bar',
+  ['〜1970年代','1980年代','1990年代','2000年代','2010年代','2020年代'],
+  [{label:'戸数（千戸）', data:[8.2,14.6,18.8,12.4,9.2,4.8], backgroundColor:[R,R,O,O,T2,T], borderRadius:4}]
+);
+
+// ===== COMPETITION =====
+// ランキングデータ（3年分）
+const rankingData = [
+  {rank:1, name:'一条工務店', y23:268, y24:302, y25:339, share:18.4, yoy:'+12.2%', rankChange:0,  product:'i-smart',      price:'3,200〜3,800万', trend:'急拡大'},
+  {rank:2, name:'桧家HD',     y23:198, y24:211, y25:218, share:11.8, yoy:'+3.4%',  rankChange:0,  product:'Z空調',        price:'2,600〜3,200万', trend:'安定成長'},
+  {rank:3, name:'積水ハウス', y23:208, y24:200, y25:194, share:10.5, yoy:'-2.8%',  rankChange:-1, product:'ダインコンクリート', price:'3,500〜5,000万', trend:'微減'},
+  {rank:4, name:'大和ハウス', y23:148, y24:140, y25:133, share:7.2,  yoy:'-5.1%',  rankChange:-1, product:'xevo',         price:'3,200〜4,500万', trend:'減少'},
+  {rank:5, name:'地元A社',    y23:118, y24:123, y25:125, share:6.8,  yoy:'+1.2%',  rankChange:+1, product:'自由設計',     price:'2,400〜3,000万', trend:'微増'},
+  {rank:6, name:'地元B社',    y23:112, y24:108, y25:100, share:5.4,  yoy:'-4.2%',  rankChange:-1, product:'ローコスト',   price:'1,800〜2,400万', trend:'減少'},
+];
+
+// ランキングテーブル描画
+const tbody = document.getElementById('rankingTable');
+rankingData.forEach(r => {
+  const yoyColor = r.yoy.startsWith('+') ? T : R;
+  const tagClass = r.trend==='急拡大'?'tag-red':r.trend==='安定成長'?'tag-teal':r.trend==='微増'?'tag-green':r.trend==='微減'?'tag-orange':'tag-gray';
+  const chg = r.rankChange===0 ? '<span class="rank-same">—</span>'
+    : r.rankChange > 0 ? `<span class="rank-up">▲ ${r.rankChange}</span>`
+    : `<span class="rank-down">▼ ${Math.abs(r.rankChange)}</span>`;
+  // スパークライン
+  const maxV = Math.max(r.y23,r.y24,r.y25);
+  const h23 = Math.round(r.y23/maxV*20), h24 = Math.round(r.y24/maxV*20), h25 = Math.round(r.y25/maxV*20);
+  const spark = `<div class="trend-spark"><div class="spark-bar" style="height:${h23}px"></div><div class="spark-bar" style="height:${h24}px"></div><div class="spark-bar latest" style="height:${h25}px"></div></div>`;
+  tbody.innerHTML += `<tr>
+    <td><span class="rank-badge rank-${r.rank}">${r.rank}</span></td>
+    <td><strong>${r.name}</strong></td>
+    <td style="font-family:'DM Mono',monospace;color:var(--text-mid)">${r.y23}</td>
+    <td style="font-family:'DM Mono',monospace;color:var(--text-mid)">${r.y24}</td>
+    <td style="font-family:'DM Mono',monospace;font-weight:700;color:var(--text)">${r.y25}</td>
+    <td>${spark}</td>
+    <td style="font-family:'DM Mono',monospace">${r.share}%</td>
+    <td style="color:${yoyColor};font-weight:700;font-family:'DM Mono',monospace">${r.yoy}</td>
+    <td>${chg}</td>
+    <td>${r.product}</td>
+    <td style="font-size:11px;color:var(--text-mid)">${r.price}</td>
+    <td><span class="tag ${tagClass}">${r.trend}</span></td>
+  </tr>`;
+});
+
+// 競合シェアチャート
+mkChart('chartCompShare','bar',
+  ['一条工務店','桧家HD','積水ハウス','大和ハウス','地元A社','地元B社','その他'],
+  [{label:'シェア(%)', data:[18.4,11.8,10.5,7.2,6.8,5.4,39.9],
+    backgroundColor:[R,O,B,Y,T,T2,GR], borderRadius:4}]
+);
+mkChart('chartCompChange','bar',
+  ['一条','桧家','積水','大和','地元A','地元B'],
+  [{label:'シェア変化(pt)', data:[2.1,0.4,-0.3,-0.8,0.2,-0.6],
+    backgroundColor: ctx => ctx.raw >= 0 ? T : R, borderRadius:4}]
+);
+
+// 着工棟数3年推移
+mkChart('chartCompTrend','line',
+  ['2022','2023','2024','2025'],
+  [
+    {label:'一条', data:[232,268,302,339], borderColor:R, fill:false, tension:0.4, pointBackgroundColor:R, pointRadius:4},
+    {label:'桧家', data:[192,198,211,218], borderColor:O, fill:false, tension:0.4, pointBackgroundColor:O, pointRadius:4},
+    {label:'積水', data:[218,208,200,194], borderColor:B, fill:false, tension:0.4, pointBackgroundColor:B, pointRadius:4},
+    {label:'大和', data:[162,148,140,133], borderColor:Y, fill:false, tension:0.4, pointBackgroundColor:Y, pointRadius:4},
+    {label:'地元A',data:[112,118,123,125], borderColor:T, fill:false, tension:0.4, pointBackgroundColor:T, pointRadius:4},
+    {label:'地元B',data:[118,112,108,100], borderColor:T3, fill:false, tension:0.4, pointRadius:4},
+  ]
+);
+
+// 順位変動ヒートマップ（HTML生成）
+const heatmapData = [
+  {name:'一条工務店', ranks:[1,1,1], color:R},
+  {name:'桧家HD',     ranks:[2,2,2], color:O},
+  {name:'積水ハウス', ranks:[2,3,3], color:B},
+  {name:'大和ハウス', ranks:[3,4,4], color:Y},
+  {name:'地元A社',    ranks:[6,5,5], color:T},
+  {name:'地元B社',    ranks:[5,6,6], color:T3},
+];
+const heatEl = document.getElementById('rankHeatmap');
+const rankColors = {1:'rgba(201,168,76,0.25)',2:'rgba(160,160,180,0.15)',3:'rgba(180,100,50,0.15)',4:'rgba(0,196,220,0.10)',5:'rgba(0,196,220,0.07)',6:'rgba(255,255,255,0.04)'};
+let hmHtml = `<table style="width:100%;border-collapse:collapse;font-size:12px;">
+  <thead><tr>
+    <th style="text-align:left;padding:6px 8px;color:var(--teal);font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border)">ビルダー</th>
+    <th style="text-align:center;padding:6px 8px;color:var(--text-mid);font-family:'DM Mono',monospace;font-size:10px;border-bottom:1px solid var(--border)">2023</th>
+    <th style="text-align:center;padding:6px 8px;color:var(--text-mid);font-family:'DM Mono',monospace;font-size:10px;border-bottom:1px solid var(--border)">2024</th>
+    <th style="text-align:center;padding:6px 8px;color:var(--teal);font-family:'DM Mono',monospace;font-size:10px;border-bottom:1px solid var(--border)">2025</th>
+    <th style="text-align:center;padding:6px 8px;color:var(--text-mid);font-family:'DM Mono',monospace;font-size:10px;border-bottom:1px solid var(--border)">変動</th>
+  </tr></thead><tbody>`;
+heatmapData.forEach(d => {
+  const chg = d.ranks[2] - d.ranks[0];
+  const chgStr = chg===0?'<span style="color:var(--text-dim)">±0</span>':chg<0?`<span style="color:var(--green);font-weight:700">▲${Math.abs(chg)}</span>`:`<span style="color:var(--red);font-weight:700">▼${Math.abs(chg)}</span>`;
+  hmHtml += `<tr>
+    <td style="padding:7px 8px;color:var(--text);font-weight:600;border-bottom:1px solid var(--border)">${d.name}</td>`;
+  d.ranks.forEach((rank, i) => {
+    const isLatest = i === 2;
+    hmHtml += `<td style="text-align:center;padding:7px 4px;border-bottom:1px solid var(--border)">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:${rankColors[rank]||'rgba(255,255,255,0.04)'};color:${isLatest?d.color:'var(--text-mid)'};font-weight:${isLatest?'800':'600'};font-family:'DM Mono',monospace;font-size:13px;border:1px solid ${isLatest?d.color+'44':'var(--border)'}">${rank}</span>
+    </td>`;
+  });
+  hmHtml += `<td style="text-align:center;padding:7px 8px;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace">${chgStr}</td></tr>`;
+});
+hmHtml += '</tbody></table>';
+heatEl.innerHTML = hmHtml;
+
+// シェア推移
+mkChart('chartCompShareTrend','line',
+  ['2022','2023','2024','2025'],
+  [
+    {label:'一条', data:[13.8,15.2,17.1,18.4], borderColor:R, fill:false, tension:0.4, pointBackgroundColor:R, pointRadius:4},
+    {label:'桧家', data:[11.0,11.2,11.5,11.8], borderColor:O, fill:false, tension:0.4, pointBackgroundColor:O, pointRadius:4},
+    {label:'積水', data:[12.2,11.8,11.2,10.5], borderColor:B, fill:false, tension:0.4, pointBackgroundColor:B, pointRadius:4},
+    {label:'大和', data:[9.0,8.4,7.8,7.2],     borderColor:Y, fill:false, tension:0.4, pointBackgroundColor:Y, pointRadius:4},
+    {label:'地元A',data:[6.2,6.6,6.9,6.8],     borderColor:T, fill:false, tension:0.4, pointBackgroundColor:T, pointRadius:4},
+  ]
+);
+mkChart('chartCompPosition','scatter',
+  [],
+  [
+    {label:'一条工務店', data:[{x:85,y:18.4}], backgroundColor:R,  pointRadius:14},
+    {label:'桧家HD',     data:[{x:72,y:11.8}], backgroundColor:O,  pointRadius:11},
+    {label:'積水ハウス', data:[{x:90,y:10.5}], backgroundColor:B,  pointRadius:11},
+    {label:'大和ハウス', data:[{x:88,y:7.2}],  backgroundColor:Y,  pointRadius:10},
+    {label:'地元A',      data:[{x:52,y:6.8}],  backgroundColor:T,  pointRadius:10},
+  ],
+  {scales:{x:{title:{display:true,text:'価格帯（高→）',color:'#5E90B0'},min:40,max:100,grid:{color:GRID},ticks:{color:'#5E90B0'}},y:{title:{display:true,text:'市場シェア(%)',color:'#5E90B0'},grid:{color:GRID},ticks:{color:'#5E90B0'}}}}
+);
+
+// ===== STRATEGY =====
+mkChart('chartStrategyRadar','radar',
+  ['人口ポテンシャル','競合密度(低=良)','地価適正','交通アクセス','将来性','WEB集客適合'],
+  [
+    {label:'熊本市全域', data:[74,38,58,80,62,72], borderColor:T,  backgroundColor:'rgba(0,196,220,0.12)', pointRadius:4, pointBackgroundColor:T},
+    {label:'菊陽北部',   data:[92,82,64,88,95,88], borderColor:O,  backgroundColor:'rgba(240,112,48,0.08)', pointRadius:4, pointBackgroundColor:O},
+  ],
+  {scales:{r:{min:0,max:100,grid:{color:GRID},ticks:{stepSize:25,color:'#5E90B0'},pointLabels:{color:'#5E90B0'}}}}
+);
+mkChart('chartStrategyCandidates','bar',
+  ['人口','競合少','地価','アクセス','将来性'],
+  [
+    {label:'菊陽北部',   data:[92,82,64,88,95], backgroundColor:T,  borderRadius:3},
+    {label:'合志インター',data:[84,72,78,82,80], backgroundColor:B,  borderRadius:3},
+    {label:'大津IC南',   data:[72,68,82,68,74], backgroundColor:O,  borderRadius:3},
+    {label:'益城中心',   data:[60,28,56,64,55], backgroundColor:R,  borderRadius:3},
+  ]
+);
+mkChart('chartStrategyArea','bar',
+  ['菊陽町','合志市','大津町','熊本市北','熊本市南','宇土市','益城町','御船町'],
+  [{label:'年間注文住宅ポテンシャル（棟）', data:[320,280,180,420,380,120,160,90],
+    backgroundColor:[T,T,T2,T2,T2,T3,O,R], borderRadius:4}]
+);
+mkChart('chartStrategyTime','line',
+  ['2022','2023','2024','2025','2026予測'],
+  [
+    {label:'菊陽北部スコア', data:[74,80,86,92,95], borderColor:T, fill:false, tension:0.4, pointBackgroundColor:T},
+    {label:'合志インター',   data:[70,74,78,84,86], borderColor:B, fill:false, tension:0.4, borderDash:[4,4], pointBackgroundColor:B},
+  ]
+);
+</script>
+</body>
+</html>
